@@ -1,6 +1,24 @@
-
-Write a complete Retirement Corpus Calculator using HTML, CSS, and JavaScript. 
+Write a complete Retirement Corpus Calculator using HTML, CSS, and JavaScript.
 The calculator should take the following inputs: current age, retirement age, monthly expenses, inflation rate, expected return after retirement, and life expectancy. 
 It should calculate the number of years to retirement, adjusted monthly expenses at retirement using inflation, and the total retirement corpus required using the Present Value of Annuity formula with monthly compounding.
-Format the output in Indian Rupees (₹) using toLocaleString('en-IN'). 
-The calculator should have a responsive layout, be user-friendly, and embeddable in any website as a standalone <div> or <iframe>.
+Format the output in Indian Rupees (₹) using toLocaleString('en-IN'). The calculator should have a responsive layout, be user-friendly, and embeddable in any website as a standalone <div> or <iframe>. 
+Also include a Reset button to clear the form.
+
+<---------------------------------------------------->
+# Tool Used: ChatGPT (OpenAI GPT-4)
+Technologies Used: HTML, CSS, JavaScript
+
+
+# Hosted on vercel
+https://retirementcalculator-phi.vercel.app/
+
+
+# iframe 
+
+<iframe 
+  src="https://retirementcalculator-phi.vercel.app/" 
+  width="100%" 
+  height="620" 
+  style="border: none; border-radius: 12px;"
+  title="Retirement Corpus Calculator">
+</iframe>
