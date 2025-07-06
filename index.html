@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retirement Corpus Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .calculate-btn {
+      background-color: #007bff;
+    }
+
+    .reset-btn {
+      background-color: #dc3545;
+    }
+
+    .result {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .result p {
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Retirement Corpus Calculator</h2>
+
+    <label>Current Age</label>
+    <input type="number" id="currentAge" placeholder="e.g., 30">
+
+    <label>Retirement Age</label>
+    <input type="number" id="retirementAge" placeholder="e.g., 60">
+
+    <label>Monthly Expenses (₹)</label>
+    <input type="number" id="monthlyExpense" placeholder="e.g., 40000">
+
+    <label>Inflation Rate (%)</label>
+    <input type="number" id="inflationRate" placeholder="e.g., 6">
+
+    <label>Expected Return Post-Retirement (%)</label>
+    <input type="number" id="returnRate" placeholder="e.g., 8">
+
+    <label>Life Expectancy (Age)</label>
+    <input type="number" id="lifeExpectancy" placeholder="e.g., 85">
+
+    <button class="calculate-btn" onclick="calculateRetirement()">Calculate</button>
+    <button class="reset-btn" onclick="resetForm()">Reset</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    // Format number as Indian Rupees
+    function formatINR(amount) {
+      return amount.toLocaleString('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 2
+      });
+    }
+
+    function calculateRetirement() {
+      const currentAge = parseFloat(document.getElementById("currentAge").value);
+      const retirementAge = parseFloat(document.getElementById("retirementAge").value);
+      const monthlyExpense = parseFloat(document.getElementById("monthlyExpense").value);
+      const inflationRate = parseFloat(document.getElementById("inflationRate").value) / 100;
+      const returnRate = parseFloat(document.getElementById("returnRate").value) / 100;
+      const lifeExpectancy = parseFloat(document.getElementById("lifeExpectancy").value);
+
+      const resultDiv = document.getElementById("result");
+
+      if (
+        isNaN(currentAge) || isNaN(retirementAge) || isNaN(monthlyExpense) ||
+        isNaN(inflationRate) || isNaN(returnRate) || isNaN(lifeExpectancy)
+      ) {
+        resultDiv.innerHTML = "❌ Please fill all fields correctly.";
+        return;
+      }
+
+      const yearsToRetire = retirementAge - currentAge;
+      const retirementYears = lifeExpectancy - retirementAge;
+
+      if (yearsToRetire <= 0 || retirementYears <= 0) {
+        resultDiv.innerHTML = "❌ Please enter valid age values.";
+        return;
+      }
+
+      const futureMonthlyExpense = monthlyExpense * Math.pow(1 + inflationRate, yearsToRetire);
+      const r = returnRate / 12;
+      const n = retirementYears * 12;
+
+      const corpus = futureMonthlyExpense * ((1 - Math.pow(1 + r, -n)) / r);
+
+      resultDiv.innerHTML = `
+        <p><strong>🧮 Years to Retire:</strong> ${yearsToRetire}</p>
+        <p><strong>📆 Retirement Duration:</strong> ${retirementYears} years</p>
+        <p><strong>📈 Monthly Expense at Retirement:</strong> ${formatINR(futureMonthlyExpense)}</p>
+        <p><strong>💰 Required Retirement Corpus:</strong> ${formatINR(corpus)}</p>
+      `;
+    }
+
+    function resetForm() {
+      document.getElementById("currentAge").value = "";
+      document.getElementById("retirementAge").value = "";
+      document.getElementById("monthlyExpense").value = "";
+      document.getElementById("inflationRate").value = "";
+      document.getElementById("returnRate").value = "";
+      document.getElementById("lifeExpectancy").value = "";
+      document.getElementById("result").innerHTML = "";
+    }
+  </script>
+
+</body>
+</html>

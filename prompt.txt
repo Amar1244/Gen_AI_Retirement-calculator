@@ -1,0 +1,4 @@
+Write a JavaScript function for a Retirement Corpus Calculator. 
+Inputs should include current age, retirement age, monthly expenses, inflation rate, expected return after retirement, and life expectancy.
+The function should calculate: (1) years to retirement, (2) number of years in retirement, (3) future monthly expenses adjusted for inflation, and (4) the total retirement corpus required using the Present Value of Annuity formula with monthly compounding.
+Format the result in Indian Rupees (₹).
